@@ -56,7 +56,7 @@ export default function StudentOnboardingForm({ defaultName, defaultEmail }: { d
         return;
       }
 
-      router.push("/student/dashboard");
+      window.location.href = "/student/dashboard";
     } catch (err) {
       setError("An unexpected error occurred");
     } finally {
