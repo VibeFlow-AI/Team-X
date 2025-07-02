@@ -3,7 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { registerStudent } from "@/server/actions/student";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
@@ -22,27 +24,45 @@ const studentSchema = z.object({
 type StudentFormData = z.infer<typeof studentSchema>;
 
 export default function StudentOnboardingPage() {
-  const [step, setStep] = useState(1);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
-    trigger,
+    setValue,
+    formState: { errors },
   } = useForm<StudentFormData>({
     resolver: zodResolver(studentSchema),
     mode: "onChange",
   });
 
   const onSubmit: SubmitHandler<StudentFormData> = async (data) => {
-    console.log("Student Registration Data:", data);
-    // TODO: Implement actual registration logic
-    alert("Registration successful! Redirecting...");
+    try {
+      setSubmitting(true);
+      setError(null);
+      const result = await registerStudent(data);
+
+      if (!result.success) {
+        setError(result.error || "Registration failed");
+        return;
+      }
+
+      router.push("/get-started");
+    } catch (err) {
+      setError("An unexpected error occurred");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 p-4">
       <div className="w-full max-w-md bg-white shadow-2xl rounded-2xl p-8">
         <h1 className="text-3xl font-bold mb-6 text-center text-blue-800">Student Onboarding</h1>
+
+        {error && <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">{error}</div>}
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
@@ -79,8 +99,12 @@ export default function StudentOnboardingPage() {
 
           <div>
             <label className="block text-sm font-medium text-gray-700">Education Level</label>
-            <Select {...register("educationLevel")}>
-              <SelectTrigger>
+            <Select
+              onValueChange={(value: "High School" | "Undergraduate" | "Graduate" | "Other") =>
+                setValue("educationLevel", value, { shouldValidate: true })
+              }
+            >
+              <SelectTrigger className={errors.educationLevel ? "border-red-500" : ""}>
                 <SelectValue placeholder="Select education level" />
               </SelectTrigger>
               <SelectContent>
@@ -98,8 +122,8 @@ export default function StudentOnboardingPage() {
             <Input {...register("interests")} placeholder="Your academic or career interests" className="mt-1" />
           </div>
 
-          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3">
-            Complete Registration
+          <Button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3" disabled={submitting}>
+            {submitting ? "Registering..." : "Complete Registration"}
           </Button>
         </form>
       </div>
