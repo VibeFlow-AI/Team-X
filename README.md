@@ -1,3 +1,5 @@
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=VibeFlow-AI_Team-X&token=345e4e9f53ab5da1e8701699b26d6cb8f3a0a62f)](https://sonarcloud.io/summary/new_code?id=VibeFlow-AI_Team-X)
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
