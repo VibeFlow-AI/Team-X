@@ -2,7 +2,7 @@ import type { Course } from "../types"
 
 export const courseData: Course[] = [
   {
-    initials: "RL",
+    initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
     title: "Resume & LinkedIn Review",
     author: "Jhon Doe",
     tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -17,7 +17,7 @@ export const courseData: Course[] = [
     idealFor: "Students applying for internships or jobs",
   },
   {
-    initials: "CR",
+    initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
     title: "Career Roadmap Planning",
     author: "Jane Smith",
     tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -31,7 +31,7 @@ export const courseData: Course[] = [
     idealFor: "Final year students or early career professionals",
   },
   {
-    initials: "MI",
+    initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
     title: "Mock Interview - Technical",
     author: "Sam Wilson",
     tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -45,7 +45,7 @@ export const courseData: Course[] = [
     idealFor: "Anyone preparing for interviews",
   },
   {
-    initials: "RL",
+    initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
     title: "Resume & LinkedIn Review",
     author: "Jhon Doe",
     tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -60,7 +60,7 @@ export const courseData: Course[] = [
     idealFor: "Students applying for internships or jobs",
   },
   {
-    initials: "CR",
+    initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
     title: "Career Roadmap Planning",
     author: "Jane Smith",
     tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -74,7 +74,7 @@ export const courseData: Course[] = [
     idealFor: "Final year students or early career professionals",
   },
   {
-    initials: "MI",
+    initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
     title: "Mock Interview - Technical",
     author: "Sam Wilson",
     tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
