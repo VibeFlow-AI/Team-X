@@ -73,7 +73,7 @@ export default function MentorOnboardingForm({ defaultName, defaultEmail }: { de
       if (result.success) {
         toast.success("Registration successful! Redirecting...");
         // The page will automatically redirect due to the revalidatePath in the server action
-        router.push("/mentor/dashboard");
+        window.location.href = "/mentor/dashboard";
       } else {
         toast.error(result.error || "Something went wrong");
       }
