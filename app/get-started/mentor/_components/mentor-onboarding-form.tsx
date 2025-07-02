@@ -2,8 +2,12 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { registerMentor } from "@/server/actions/mentor";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 // Mentor Registration Schema
@@ -22,6 +26,9 @@ const mentorSchema = z.object({
 type MentorFormData = z.infer<typeof mentorSchema>;
 
 export default function MentorOnboardingForm({ defaultName, defaultEmail }: { defaultName: string; defaultEmail: string }) {
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -46,7 +53,6 @@ export default function MentorOnboardingForm({ defaultName, defaultEmail }: { de
   const toggleExpertiseArea = (area: string) => {
     const currentAreas = expertiseAreas || [];
     const newAreas = currentAreas.includes(area) ? currentAreas.filter((a) => a !== area) : [...currentAreas, area];
-
     setValue("expertiseAreas", newAreas);
   };
 
@@ -60,10 +66,18 @@ export default function MentorOnboardingForm({ defaultName, defaultEmail }: { de
     "Artificial Intelligence",
   ];
 
-  const onSubmit: SubmitHandler<MentorFormData> = async (data) => {
-    console.log("Mentor Registration Data:", data);
-    // TODO: Implement actual registration logic
-    alert("Registration successful! Redirecting...");
+  const onSubmit: SubmitHandler<MentorFormData> = (data) => {
+    startTransition(async () => {
+      const result = await registerMentor(data);
+
+      if (result.success) {
+        toast.success("Registration successful! Redirecting...");
+        // The page will automatically redirect due to the revalidatePath in the server action
+        router.push("/mentor/dashboard");
+      } else {
+        toast.error(result.error || "Something went wrong");
+      }
+    });
   };
 
   return (
@@ -145,8 +159,8 @@ export default function MentorOnboardingForm({ defaultName, defaultEmail }: { de
             {errors.linkedin && <p className="text-red-500 text-xs mt-1">{errors.linkedin.message}</p>}
           </div>
 
-          <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white py-3">
-            Complete Registration
+          <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white py-3" disabled={isPending}>
+            {isPending ? "Registering..." : "Complete Registration"}
           </Button>
         </form>
       </div>

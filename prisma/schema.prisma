@@ -25,3 +25,16 @@ model Student {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Mentor {
+  id                String   @id @default(cuid())
+  name             String
+  email            String   @unique
+  profession       String
+  yearsOfExperience Int
+  expertiseAreas   String[] // Stored as array of strings
+  linkedin         String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
