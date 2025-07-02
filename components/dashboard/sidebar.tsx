@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
 	Home,
 	CalendarIcon,
@@ -13,6 +12,7 @@ import {
 } from "lucide-react";
 import type { NavigationItem } from "@/app/mentor/dashboard/page";
 import { cn } from "@/lib/utils";
+import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 
 interface SidebarProps {
 	activeView: NavigationItem;
@@ -21,6 +21,8 @@ interface SidebarProps {
 
 export function Sidebar({ activeView, onNavigate }: SidebarProps) {
 	const [isCollapsed, setIsCollapsed] = useState(false);
+
+	const { user } = useUser();
 
 	const navigationItems = [
 		{
@@ -48,7 +50,7 @@ export function Sidebar({ activeView, onNavigate }: SidebarProps) {
 	return (
 		<aside
 			className={cn(
-				"bg-white border-r border-gray-200 flex flex-col transition-all duration-300 ease-in-out",
+				"bg-white border-r border-gray-200 flex flex-col transition-all max-h-screen duration-300 ease-in-out",
 				isCollapsed ? "w-16" : "w-64"
 			)}
 		>
@@ -111,21 +113,25 @@ export function Sidebar({ activeView, onNavigate }: SidebarProps) {
 			>
 				{isCollapsed ? (
 					<div className="flex justify-center">
-						<Avatar className="w-10 h-10">
-							<AvatarImage src="/placeholder.svg?height=40&width=40" />
-							<AvatarFallback>DP</AvatarFallback>
-						</Avatar>
+						<SignedIn>
+							<UserButton />
+						</SignedIn>
 					</div>
 				) : (
 					<div className="flex items-center space-x-3">
-						<Avatar className="w-10 h-10">
-							<AvatarImage src="/placeholder.svg?height=40&width=40" />
-							<AvatarFallback>DP</AvatarFallback>
-						</Avatar>
-						<div>
-							<p className="text-sm font-medium">Dr. Patel</p>
-							<p className="text-xs text-gray-500">Mentor</p>
-						</div>
+						<SignedIn>
+							<UserButton />
+							<div>
+								<p className="text-sm font-medium">{user?.fullName ?? ""}</p>
+								<p className="text-xs text-gray-500">
+									{user?.publicMetadata.role === "mentor"
+										? "Mentor"
+										: user?.publicMetadata.role === "student"
+										? "Student"
+										: ""}
+								</p>
+							</div>
+						</SignedIn>
 					</div>
 				)}
 			</div>
