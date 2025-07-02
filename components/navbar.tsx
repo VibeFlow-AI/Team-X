@@ -1,6 +1,7 @@
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { BookOpenIcon } from "lucide-react";
 import Link from "next/link";
+import { Button } from "./ui/button";
 
 const Navbar = () => {
   return (
@@ -29,6 +30,9 @@ const Navbar = () => {
           </SignUpButton>
         </SignedOut>
         <SignedIn>
+          <Button asChild>
+            <Link href="/get-started">Dashboard</Link>
+          </Button>
           <UserButton />
         </SignedIn>
       </div>
