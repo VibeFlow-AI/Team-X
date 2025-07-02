@@ -3,7 +3,7 @@ import type { Course } from "../types";
 export const courseData: Course[] = [
 	{
 		id: "1",
-		initials: "RL",
+		initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
 		title: "Resume & LinkedIn Review",
 		author: "Jhon Doe",
 		tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -19,7 +19,7 @@ export const courseData: Course[] = [
 	},
 	{
 		id: "2",
-		initials: "CR",
+		initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
 		title: "Career Roadmap Planning",
 		author: "Jane Smith",
 		tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -35,7 +35,7 @@ export const courseData: Course[] = [
 	},
 	{
 		id: "3",
-		initials: "MI",
+		initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
 		title: "Mock Interview - Technical",
 		author: "Sam Wilson",
 		tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -51,7 +51,7 @@ export const courseData: Course[] = [
 	},
 	{
 		id: "4",
-		initials: "RL",
+		initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
 		title: "Resume & LinkedIn Review",
 		author: "Jhon Doe",
 		tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -67,7 +67,7 @@ export const courseData: Course[] = [
 	},
 	{
 		id: "5",
-		initials: "CR",
+		initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
 		title: "Career Roadmap Planning",
 		author: "Jane Smith",
 		tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
@@ -83,7 +83,7 @@ export const courseData: Course[] = [
 	},
 	{
 		id: "6",
-		initials: "MI",
+		initials: "https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg",
 		title: "Mock Interview - Technical",
 		author: "Sam Wilson",
 		tags: ["#CareerPrep", "#LinkedIn", "#ResumeTips"],
