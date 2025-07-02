@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 
@@ -15,14 +16,28 @@ const studentSchema = z.object({
 export async function registerStudent(formData: z.infer<typeof studentSchema>) {
   try {
     const validatedData = studentSchema.parse(formData);
+    const user = await currentUser();
+
+    if (!user) {
+      return { success: false, error: "User not authenticated" };
+    }
 
     const student = await prisma.student.create({
       data: {
+        id: user.id,
         name: validatedData.fullName,
         email: validatedData.email,
         age: validatedData.age,
         educationLevel: validatedData.educationLevel,
         interests: validatedData.interests || null,
+      },
+    });
+
+    const client = await clerkClient();
+
+    await client.users.updateUserMetadata(user.id, {
+      publicMetadata: {
+        role: "student",
       },
     });
 
