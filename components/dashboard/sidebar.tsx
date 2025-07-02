@@ -2,55 +2,30 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-	Home,
-	CalendarIcon,
-	Plus,
-	BookOpen,
-	ChevronLeft,
-	ChevronRight,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { NavigationItem } from "@/app/mentor/dashboard/page";
 import { cn } from "@/lib/utils";
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 
 interface SidebarProps {
-	activeView: NavigationItem;
+	activeView: NavigationItem["id"];
 	onNavigate: (view: NavigationItem) => void;
+	navigationItems: NavigationItem[];
 }
 
-export function Sidebar({ activeView, onNavigate }: SidebarProps) {
+export function Sidebar({
+	activeView,
+	onNavigate,
+	navigationItems,
+}: SidebarProps) {
 	const [isCollapsed, setIsCollapsed] = useState(false);
 
 	const { user } = useUser();
 
-	const navigationItems = [
-		{
-			id: "overview" as NavigationItem,
-			label: "Overview",
-			icon: Home,
-		},
-		{
-			id: "sessions" as NavigationItem,
-			label: "All Sessions",
-			icon: CalendarIcon,
-		},
-		{
-			id: "create" as NavigationItem,
-			label: "Create Session",
-			icon: Plus,
-		},
-		{
-			id: "programs" as NavigationItem,
-			label: "Programs",
-			icon: BookOpen,
-		},
-	];
-
 	return (
 		<aside
 			className={cn(
-				"bg-white border-r border-gray-200 flex flex-col transition-all max-h-screen duration-300 ease-in-out",
+				"fixed bg-white border-r border-gray-200 flex flex-col transition-all max-h-screen duration-300 ease-in-out",
 				isCollapsed ? "w-16" : "w-64"
 			)}
 		>
@@ -97,7 +72,7 @@ export function Sidebar({ activeView, onNavigate }: SidebarProps) {
 									: "justify-start text-left",
 								activeView === item.id && "bg-gray-100 text-gray-900"
 							)}
-							onClick={() => onNavigate(item.id)}
+							onClick={() => onNavigate(item)}
 							title={isCollapsed ? item.label : undefined}
 						>
 							<Icon className={cn("h-5 w-5", !isCollapsed && "mr-3")} />
