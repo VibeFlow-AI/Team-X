@@ -1,5 +1,6 @@
 import { SignedIn, SignedOut, SignInButton, SignUpButton, UserButton } from "@clerk/nextjs";
 import { BookOpenIcon } from "lucide-react";
+import Link from "next/link";
 
 const Navbar = () => {
   return (
@@ -8,10 +9,10 @@ const Navbar = () => {
         <BookOpenIcon size={28} className="text-black" />
       </div>
       <div className="hidden md:flex items-center space-x-8">
-        <a href="#" className="text-black hover:text-gray-700">
+        <Link href="/" className="text-black hover:text-gray-700">
           Home
-        </a>
-        <a href="#" className="text-black hover:text-gray-700">
+        </Link>
+        <a href="/sessions" className="text-black hover:text-gray-700">
           Sessions
         </a>
         <a href="#" className="text-black hover:text-gray-700">
