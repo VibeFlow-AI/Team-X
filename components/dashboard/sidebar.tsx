@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import type { NavigationItem } from "@/app/mentor/dashboard/page";
@@ -8,83 +7,92 @@ import { cn } from "@/lib/utils";
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
 
 interface SidebarProps {
+	isCollapsed: boolean;
+	setIsCollapsed: (isCollapsed: boolean) => void;
 	activeView: NavigationItem["id"];
 	onNavigate: (view: NavigationItem) => void;
 	navigationItems: NavigationItem[];
 }
 
 export function Sidebar({
+	isCollapsed,
+	setIsCollapsed,
 	activeView,
 	onNavigate,
 	navigationItems,
 }: SidebarProps) {
-	const [isCollapsed, setIsCollapsed] = useState(false);
-
 	const { user } = useUser();
 
 	return (
 		<aside
 			className={cn(
-				"fixed bg-white border-r border-gray-200 flex flex-col transition-all max-h-screen duration-300 ease-in-out",
+				"fixed flex flex-col inset-y-0 left-0 z-50 bg-card border-r border-border transform transition-transform duration-300 ease-in-out lg:translate-x-0",
 				isCollapsed ? "w-16" : "w-64"
 			)}
 		>
 			{/* Header with collapse toggle */}
 			<div
-				className={cn("p-4 border-b border-gray-200", isCollapsed && "px-2")}
+				className={cn(
+					"flex h-16 items-center justify-between px-6 border-b border-border",
+					isCollapsed && "px-4"
+				)}
 			>
-				<div className="flex items-center justify-between">
-					{!isCollapsed && (
-						<h2 className="text-lg font-semibold text-gray-900">Navigation</h2>
+				{!isCollapsed && (
+					<h1 className="text-xl font-bold text-foreground">
+						{user?.publicMetadata.role === "mentor"
+							? "Mentor Dashboard"
+							: user?.publicMetadata.role === "student"
+							? "Student Dashboard"
+							: "Dashboard"}
+					</h1>
+				)}
+				<Button
+					variant="ghost"
+					size="icon"
+					onClick={() => setIsCollapsed(!isCollapsed)}
+					className="h-8 w-8"
+				>
+					{isCollapsed ? (
+						<ChevronRight className="h-4 w-4" />
+					) : (
+						<ChevronLeft className="h-4 w-4" />
 					)}
-					<Button
-						variant="ghost"
-						size="icon"
-						onClick={() => setIsCollapsed(!isCollapsed)}
-						className="h-8 w-8"
-					>
-						{isCollapsed ? (
-							<ChevronRight className="h-4 w-4" />
-						) : (
-							<ChevronLeft className="h-4 w-4" />
-						)}
-					</Button>
-				</div>
+				</Button>
 			</div>
 
 			{/* Navigation Items */}
-			<nav
-				className={cn(
-					"flex-1 space-y-2",
-					isCollapsed ? "px-2 py-4" : "px-4 py-4"
-				)}
-			>
-				{navigationItems.map((item) => {
-					const Icon = item.icon;
-					return (
-						<Button
-							key={item.id}
-							variant="ghost"
-							className={cn(
-								"w-full transition-all duration-200",
-								isCollapsed
-									? "h-10 w-10 p-0 justify-center"
-									: "justify-start text-left",
-								activeView === item.id && "bg-gray-100 text-gray-900"
-							)}
-							onClick={() => onNavigate(item)}
-							title={isCollapsed ? item.label : undefined}
-						>
-							<Icon className={cn("h-5 w-5", !isCollapsed && "mr-3")} />
-							{!isCollapsed && <span>{item.label}</span>}
-						</Button>
-					);
-				})}
+			<nav className="mt-6 px-3">
+				<ul className="space-y-1">
+					{navigationItems.map((item) => {
+						const Icon = item.icon;
+						return (
+							<Button
+								key={item.id}
+								variant="ghost"
+								className={cn(
+									"w-full transition-all duration-200",
+									isCollapsed
+										? "h-10 w-10 p-0 justify-center"
+										: "justify-start text-left",
+									activeView === item.id && "bg-gray-100 text-gray-900"
+								)}
+								onClick={() => onNavigate(item)}
+								title={isCollapsed ? item.label : undefined}
+							>
+								<Icon className={cn("h-5 w-5", !isCollapsed && "mr-3")} />
+								{!isCollapsed && <span>{item.label}</span>}
+							</Button>
+						);
+					})}
+				</ul>
 			</nav>
 
 			{/* User Profile */}
 			<div
-				className={cn("p-4 border-t border-gray-200", isCollapsed && "px-2")}
+				className={cn(
+					"p-4 border-t border-gray-200 mt-auto",
+					isCollapsed && "px-2"
+				)}
 			>
 				{isCollapsed ? (
 					<div className="flex justify-center">

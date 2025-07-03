@@ -39,6 +39,7 @@ const navigationItems: NavigationItem[] = [
 ];
 
 export default function MentorDashboard() {
+	const [isCollapsed, setIsCollapsed] = useState(true);
 	const [activeView, setActiveView] =
 		useState<NavigationItem["id"]>("overview");
 
@@ -64,8 +65,16 @@ export default function MentorDashboard() {
 					activeView={activeView}
 					onNavigate={(item) => setActiveView(item.id)}
 					navigationItems={navigationItems}
+					isCollapsed={isCollapsed}
+					setIsCollapsed={setIsCollapsed}
 				/>
-				<main className="flex-1 p-6 ml-64">{renderActiveView()}</main>
+				<main
+					className={
+						!isCollapsed ? "flex-1 ml-16 lg:ml-64 p-6" : "flex-1 ml-16 p-6"
+					}
+				>
+					{renderActiveView()}
+				</main>
 			</div>
 		</div>
 	);
