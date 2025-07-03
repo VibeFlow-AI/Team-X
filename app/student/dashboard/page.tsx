@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Sidebar } from "@/components/dashboard/sidebar";
-import { MentorDiscovery } from "./component/students/mentor-discovery";
-import { StudentSessions } from "./component/students/student-sessions";
+import { MentorDiscovery } from "@/components/dashboard/mentor-discovery";
+import { StudentSessions } from "@/components/dashboard/student-sessions";
 import { UserSearch, CalendarIcon } from "lucide-react";
 import type { NavigationItem } from "@/components/dashboard/sidebar";
 
