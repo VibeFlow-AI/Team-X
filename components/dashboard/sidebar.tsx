@@ -2,9 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { NavigationItem } from "@/app/mentor/dashboard/page";
 import { cn } from "@/lib/utils";
 import { SignedIn, UserButton, useUser } from "@clerk/nextjs";
+
+export type NavigationItem = {
+	id: string;
+	label: string;
+	icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+};
 
 interface SidebarProps {
 	isCollapsed: boolean;

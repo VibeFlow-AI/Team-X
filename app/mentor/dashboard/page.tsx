@@ -8,12 +8,7 @@ import { SessionsManager } from "@/components/dashboard/sessions-manager";
 import { CreateSession } from "@/components/dashboard/create-session";
 import { ProgramsManager } from "@/components/dashboard/programs-manager";
 import { Home, CalendarIcon, Plus, BookOpen } from "lucide-react";
-
-export type NavigationItem = {
-	id: "overview" | "sessions" | "create" | "programs";
-	label: string;
-	icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-};
+import type { NavigationItem } from "@/components/dashboard/sidebar";
 
 const navigationItems: NavigationItem[] = [
 	{
