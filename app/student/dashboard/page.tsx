@@ -1,67 +1,59 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { MentorDiscovery } from "./component/students/mentor-discovery"
-import { StudentSessions } from "./component/students/student-sessions"
+import { useState } from "react";
+import { Sidebar } from "@/components/dashboard/sidebar";
+import { MentorDiscovery } from "@/components/dashboard/mentor-discovery";
+import { StudentSessions } from "@/components/dashboard/student-sessions";
+import { UserSearch, CalendarIcon } from "lucide-react";
+import type { NavigationItem } from "@/components/dashboard/sidebar";
 
-type StudentView = "discovery" | "sessions" | "profile"
+const navigationItems: NavigationItem[] = [
+	{
+		id: "discovery",
+		label: "Find Mentors",
+		icon: UserSearch,
+	},
+	{
+		id: "sessions",
+		label: "My Sessions",
+		icon: CalendarIcon,
+	},
+];
 
 export default function StudentDashboard() {
-  const [activeView, setActiveView] = useState<StudentView>("discovery")
+	const [isCollapsed, setIsCollapsed] = useState(true);
+	const [activeView, setActiveView] =
+		useState<NavigationItem["id"]>("discovery");
 
-  const renderActiveView = () => {
-    switch (activeView) {
-      case "discovery":
-        return <MentorDiscovery />
-      case "sessions":
-        return <StudentSessions />
-      case "profile":
-        return <div>Profile view coming soon...</div>
-      default:
-        return <MentorDiscovery />
-    }
-  }
+	const renderActiveView = () => {
+		switch (activeView) {
+			case "discovery":
+				return <MentorDiscovery />;
+			case "sessions":
+				return <StudentSessions />;
+			default:
+				return <MentorDiscovery />;
+		}
+	};
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <main className="container mx-auto px-6 py-8">
-        <div className="mb-6">
-          <nav className="flex space-x-8">
-            <button
-              onClick={() => setActiveView("discovery")}
-              className={`pb-2 border-b-2 transition-colors ${
-                activeView === "discovery"
-                  ? "border-black text-black"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              Find Mentors
-            </button>
-            <button
-              onClick={() => setActiveView("sessions")}
-              className={`pb-2 border-b-2 transition-colors ${
-                activeView === "sessions"
-                  ? "border-black text-black"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              My Sessions
-            </button>
-            <button
-              onClick={() => setActiveView("profile")}
-              className={`pb-2 border-b-2 transition-colors ${
-                activeView === "profile"
-                  ? "border-black text-black"
-                  : "border-transparent text-gray-500 hover:text-gray-700"
-              }`}
-            >
-              Profile
-            </button>
-          </nav>
-        </div>
-        {renderActiveView()}
-      </main>
-    </div>
-  )
+	return (
+		<div className="min-h-screen bg-gray-50">
+			<div className="flex">
+				<Sidebar
+					activeView={activeView}
+					onNavigate={(item) => setActiveView(item.id)}
+					navigationItems={navigationItems}
+					isCollapsed={isCollapsed}
+					setIsCollapsed={setIsCollapsed}
+				/>
+				<main
+					className={
+						!isCollapsed ? "flex-1 ml-16 lg:ml-64 p-6" : "flex-1 ml-16 p-6"
+					}
+				>
+					{renderActiveView()}
+				</main>
+			</div>
+		</div>
+	);
 }
-
